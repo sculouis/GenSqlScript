@@ -7,5 +7,20 @@
 
   <ItemGroup>
     <PackageReference Include="NPOI" Version="2.4.1" />
+    <PackageReference Include="System.CodeDom" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="TableSchema1.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="TableSchema.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>TableSchema.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="TableSchema.cs">
+      <DependentUpon>TableSchema.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

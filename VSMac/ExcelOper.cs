@@ -10,40 +10,27 @@ namespace VSMac
 {
     public class ExcelOper
     {
-        public ExcelOper()
+        private IWorkbook wb;
+
+        public ExcelOper(string fileName)
         {
+            wb = new XSSFWorkbook(fileName);
         }
 
         /// <summary>
-        /// 產生sql script語法,依據SheetName
+        /// Get DataTable almost is Sheet
         /// </summary>
-        /// <param name="fileName">輸入檔名不包含路徑</param>
-        public static void genSql(string fileName, ArrayList tables)
+        /// <param name="tableName">輸入檔名不包含路徑</param>
+        public DataTable GenSql(string tableName)
         {
+            DataTable dt;
             //序號 Key 欄位英文名稱 欄位中文名稱  資料型態 長度  Null 預設值 物件Mapping 備註  資料源(系統)
-                using (FileStream fs = new FileStream(fileName, FileMode.Open))
-                {
-                    IWorkbook wb = new XSSFWorkbook(fs);
-                    ISheet sheet;
 
-                    //產生drop table script
-                    //DropTableScript(tables);
-                    foreach (var table in tables)
-                    {
-                        var tableName = table.ToString();          //取得資料表的名稱
-                        sheet = wb.GetSheet(tableName);
-                        var tableData1 = SheetData(sheet, 3, 2);
-                        try
-                        {
-                            //GenDetail(tables, tableName, tableData1, file);
-                        }
-                        catch (Exception e)
-                        {
-                            Debug.WriteLine(e.Message);
-                            throw;
-                        }
-                    }
-            }
+            //產生drop table script
+            //DropTableScript(tables);
+            ISheet sheet = this.wb.GetSheet(tableName);
+            dt = SheetData(sheet, 3, 2);
+            return dt;
         }
 
 
