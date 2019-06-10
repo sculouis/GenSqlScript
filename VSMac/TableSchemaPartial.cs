@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data;
 
+namespace VSMac
+{
     public partial class TableSchema
     {
         public string TableName { get; set; }
@@ -14,3 +16,4 @@ using System.Data;
 
 
     }
+}

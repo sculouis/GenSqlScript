@@ -10,9 +10,9 @@ Create Table <#= this.TableName #>
     <#
         foreach (DataRow row in this.Mdata.Rows)
         {
-
+        string type = (string)row["資料型態"];
     #>
-        <#= row["欄位英文名稱"] #>
+    <#= row["欄位英文名稱"] #> <#= type #><# if (( type == "decimal") || ( type == "varchar") || ( type == "nvarchar")) { #> (<#= row["長度"] #>) <# } #>, 
     <#                
         }
     #>

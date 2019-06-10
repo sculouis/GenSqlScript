@@ -17,6 +17,7 @@ namespace VSMac
             wb = new XSSFWorkbook(fileName);
         }
 
+
         /// <summary>
         /// Get DataTable almost is Sheet
         /// </summary>
@@ -35,7 +36,7 @@ namespace VSMac
 
 
         /// <summary>
-        /// 
+        /// Get Sheet Data To DataTable
         /// </summary>
         /// <returns>The data.</returns>
         /// <param name="sheet">Sheet.</param>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Data;
 
 namespace VSMac
 {
@@ -11,8 +12,10 @@ namespace VSMac
             var excelObj = new ExcelOper(fileName);
             var TableName = "ClassMaster";
             var dt = excelObj.GenSql(TableName);
-            var schemaObj = new TableSchema(dt);
-            schemaObj.TableName = TableName;
+            TableSchema schemaObj = new TableSchema(dt)
+            {
+                TableName = TableName
+            };
             string content = schemaObj.TransformText();
             System.IO.File.WriteAllText("test.sql", content);
         }
