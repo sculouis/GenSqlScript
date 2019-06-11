@@ -44,81 +44,277 @@ namespace VSMac {
         foreach (DataRow row in this.Mdata.Rows)
         {
         string type = (string)row["資料型態"];
+        string fieldName = (string)row["欄位英文名稱"];
+        string chineseFieldName = (string)row["欄位中文名稱"];
+        string key = (string)row["Key"];
+        string CanNull = (string)row["CanNull"];
     
             
             #line default
             #line hidden
             
-            #line 15 ""
+            #line 19 ""
             this.Write("    ");
             
             #line default
             #line hidden
             
-            #line 15 ""
-            this.Write(this.ToStringHelper.ToStringWithCulture( row["欄位英文名稱"] ));
+            #line 19 ""
+ if (key == "PK") { 
             
             #line default
             #line hidden
             
-            #line 15 ""
-            this.Write(" ");
+            #line 20 ""
+            this.Write("    ");
             
             #line default
             #line hidden
             
-            #line 15 ""
-            this.Write(this.ToStringHelper.ToStringWithCulture( type ));
-            
-            #line default
-            #line hidden
-            
-            #line 15 ""
- if (( type == "decimal") || ( type == "varchar") || ( type == "nvarchar")) { 
-            
-            #line default
-            #line hidden
-            
-            #line 16 ""
-            this.Write(" (");
-            
-            #line default
-            #line hidden
-            
-            #line 16 ""
-            this.Write(this.ToStringHelper.ToStringWithCulture( row["長度"] ));
-            
-            #line default
-            #line hidden
-            
-            #line 16 ""
-            this.Write(") ");
-            
-            #line default
-            #line hidden
-            
-            #line 16 ""
- } 
-            
-            #line default
-            #line hidden
-            
-            #line 17 ""
-            this.Write(", \n    ");
-            
-            #line default
-            #line hidden
-            
-            #line 18 ""
-                
-        }
-    
+            #line 20 ""
+ if (type == "uniqueidentifier") { 
             
             #line default
             #line hidden
             
             #line 21 ""
+            this.Write(this.ToStringHelper.ToStringWithCulture( fieldName ));
+            
+            #line default
+            #line hidden
+            
+            #line 21 ""
+            this.Write(" UNIQUEIDENTIFIER DEFAULT NEWID(),\n    CONSTRAINT PK_");
+            
+            #line default
+            #line hidden
+            
+            #line 22 ""
+            this.Write(this.ToStringHelper.ToStringWithCulture( this.TableName ));
+            
+            #line default
+            #line hidden
+            
+            #line 22 ""
+            this.Write(" PRIMARY KEY CLUSTERED(");
+            
+            #line default
+            #line hidden
+            
+            #line 22 ""
+            this.Write(this.ToStringHelper.ToStringWithCulture( fieldName ));
+            
+            #line default
+            #line hidden
+            
+            #line 22 ""
+            this.Write("),\n");
+            
+            #line default
+            #line hidden
+            
+            #line 23 ""
+ } else if (type == "int") { 
+            
+            #line default
+            #line hidden
+            
+            #line 24 ""
+            this.Write(this.ToStringHelper.ToStringWithCulture( fieldName ));
+            
+            #line default
+            #line hidden
+            
+            #line 24 ""
+            this.Write(" Int Not Null Identity(1,1),\n    CONSTRAINT PK_");
+            
+            #line default
+            #line hidden
+            
+            #line 25 ""
+            this.Write(this.ToStringHelper.ToStringWithCulture( this.TableName ));
+            
+            #line default
+            #line hidden
+            
+            #line 25 ""
+            this.Write(" PRIMARY KEY CLUSTERED(");
+            
+            #line default
+            #line hidden
+            
+            #line 25 ""
+            this.Write(this.ToStringHelper.ToStringWithCulture( fieldName ));
+            
+            #line default
+            #line hidden
+            
+            #line 25 ""
+            this.Write("),\n");
+            
+            #line default
+            #line hidden
+            
+            #line 26 ""
+ } 
+            
+            #line default
+            #line hidden
+            
+            #line 27 ""
+ } else { 
+            
+            #line default
+            #line hidden
+            
+            #line 28 ""
+            this.Write(this.ToStringHelper.ToStringWithCulture( fieldName ));
+            
+            #line default
+            #line hidden
+            
+            #line 28 ""
+            this.Write(" ");
+            
+            #line default
+            #line hidden
+            
+            #line 28 ""
+            this.Write(this.ToStringHelper.ToStringWithCulture( type ));
+            
+            #line default
+            #line hidden
+            
+            #line 28 ""
+ if (( type == "decimal") || ( type == "varchar") || ( type == "nvarchar")) { 
+            
+            #line default
+            #line hidden
+            
+            #line 29 ""
+            this.Write("(");
+            
+            #line default
+            #line hidden
+            
+            #line 29 ""
+            this.Write(this.ToStringHelper.ToStringWithCulture( row["長度"] ));
+            
+            #line default
+            #line hidden
+            
+            #line 29 ""
             this.Write(")");
+            
+            #line default
+            #line hidden
+            
+            #line 29 ""
+ } 
+            
+            #line default
+            #line hidden
+            
+            #line 30 ""
+ if (CanNull == "Y") { 
+            
+            #line default
+            #line hidden
+            
+            #line 31 ""
+            this.Write(" Null ");
+            
+            #line default
+            #line hidden
+            
+            #line 31 ""
+ } 
+            
+            #line default
+            #line hidden
+            
+            #line 32 ""
+            this.Write(",\n    ");
+            
+            #line default
+            #line hidden
+            
+            #line 33 ""
+ }} 
+            
+            #line default
+            #line hidden
+            
+            #line 34 ""
+            this.Write(")\n\n--增加欄位說明\n    ");
+            
+            #line default
+            #line hidden
+            
+            #line 37 ""
+
+        foreach (DataRow row in this.Mdata.Rows)
+        {
+        string type = (string)row["資料型態"];
+        string fieldName = (string)row["欄位英文名稱"];
+        string chineseFieldName = (string)row["欄位中文名稱"];
+        string key = (string)row["Key"];
+    
+            
+            #line default
+            #line hidden
+            
+            #line 45 ""
+            this.Write("\nEXEC sys.sp_addextendedproperty\n    @name = N\'MS_Description\'\n    ,@value = N\'");
+            
+            #line default
+            #line hidden
+            
+            #line 48 ""
+            this.Write(this.ToStringHelper.ToStringWithCulture( chineseFieldName ));
+            
+            #line default
+            #line hidden
+            
+            #line 48 ""
+            this.Write("\'\n    ,@level0type = N\'SCHEMA\'\n    ,@level0name = N\'ERP\'\n    ,@level1type = N\'TAB" +
+                    "LE\'\n    ,@level1name = N\'");
+            
+            #line default
+            #line hidden
+            
+            #line 52 ""
+            this.Write(this.ToStringHelper.ToStringWithCulture( this.TableName ));
+            
+            #line default
+            #line hidden
+            
+            #line 52 ""
+            this.Write("\'\n    ,@level2type = N\'COLUMN\'\n    ,@level2name = N\'");
+            
+            #line default
+            #line hidden
+            
+            #line 54 ""
+            this.Write(this.ToStringHelper.ToStringWithCulture( fieldName ));
+            
+            #line default
+            #line hidden
+            
+            #line 54 ""
+            this.Write("\'\n    ");
+            
+            #line default
+            #line hidden
+            
+            #line 55 ""
+ } 
+            
+            #line default
+            #line hidden
+            
+            #line 56 ""
+            this.Write("    ");
             
             #line default
             #line hidden

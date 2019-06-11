@@ -11,9 +11,41 @@ Create Table <#= this.TableName #>
         foreach (DataRow row in this.Mdata.Rows)
         {
         string type = (string)row["資料型態"];
+        string fieldName = (string)row["欄位英文名稱"];
+        string chineseFieldName = (string)row["欄位中文名稱"];
+        string key = (string)row["Key"];
+        string CanNull = (string)row["CanNull"];
     #>
-    <#= row["欄位英文名稱"] #> <#= type #><# if (( type == "decimal") || ( type == "varchar") || ( type == "nvarchar")) { #> (<#= row["長度"] #>) <# } #>, 
-    <#                
-        }
-    #>
+    <# if (key == "PK") { #>
+    <# if (type == "uniqueidentifier") { #>
+<#= fieldName #> UNIQUEIDENTIFIER DEFAULT NEWID(),
+    CONSTRAINT PK_<#= this.TableName #> PRIMARY KEY CLUSTERED(<#= fieldName #>),
+<# } else if (type == "int") { #>
+<#= fieldName #> Int Not Null Identity(1,1),
+    CONSTRAINT PK_<#= this.TableName #> PRIMARY KEY CLUSTERED(<#= fieldName #>),
+<# } #>
+<# } else { #><#= fieldName #> <#= type #><# if (( type == "decimal") || ( type == "varchar") || ( type == "nvarchar")) { #>(<#= row["長度"] #>)<# } #><# if (CanNull == "Y") { #> Null <# } #>,
+    <# }} #>
 )
+
+--增加欄位說明
+    <#
+        foreach (DataRow row in this.Mdata.Rows)
+        {
+        string type = (string)row["資料型態"];
+        string fieldName = (string)row["欄位英文名稱"];
+        string chineseFieldName = (string)row["欄位中文名稱"];
+        string key = (string)row["Key"];
+    #>
+
+EXEC sys.sp_addextendedproperty
+    @name = N'MS_Description'
+    ,@value = N'<#= chineseFieldName #>'
+    ,@level0type = N'SCHEMA'
+    ,@level0name = N'ERP'
+    ,@level1type = N'TABLE'
+    ,@level1name = N'<#= this.TableName #>'
+    ,@level2type = N'COLUMN'
+    ,@level2name = N'<#= fieldName #>'
+    <# } #>
+    
